@@ -1,10 +1,12 @@
 use aws_config::BehaviorVersion;
+use aws_sdk_bedrockruntime::types::InferenceConfiguration;
 use aws_sdk_bedrockruntime::{
     operation::converse::{ConverseError, ConverseOutput},
     types::{ContentBlock, ConversationRole},
     Client,
 };
 use axum::{extract::State, response::Html, routing::get, serve, Router};
+use rand::prelude::IndexedRandom;
 use std::sync::Arc;
 use tokio::net::TcpListener;
 use tokio::sync::{Mutex, RwLock};
@@ -12,6 +14,85 @@ use tracing::info;
 
 const AWS_REGION: &str = "us-east-1";
 const MODEL_ID: &str = "anthropic.claude-3-5-sonnet-20240620-v1:0";
+
+const WEBSITE_CATEGORIES: [&str; 20] = [
+    "Tech Blog",
+    "News Website",
+    "Travel Website",
+    "E-commerce Store",
+    "Personal Portfolio",
+    "Restaurant Website",
+    "Fitness Blog",
+    "Photography Portfolio",
+    "Corporate Website",
+    "Educational Platform",
+    "Music Streaming Service",
+    "Real Estate Listings",
+    "Fashion Blog",
+    "Social Media Dashboard",
+    "Online Marketplace",
+    "Gaming Community",
+    "Recipe Blog",
+    "Nonprofit Organization",
+    "Event Planning Service",
+    "Job Board",
+];
+
+const WEBPAGE_GENERATION_PROMPT: &str = r#"Task: Generate a complete, random webpage with HTML, CSS, and JavaScript that exemplifies modern web design trends and best practices.
+
+Context: You are a creative web developer and designer tasked with creating a unique, visually stunning, fully functional webpage. The webpage should be for the following website type, showcasing contemporary design aesthetics: "{{CATEGORY}}"
+
+Instructions:
+1. Create a webpage for the given website type with the following components:
+   a. HTML structure:
+      - Use semantic HTML5 tags
+      - Ensure proper nesting and organization of elements
+      - Implement accessibility best practices (ARIA attributes where appropriate)
+
+   b. CSS styling:
+      - Use inline CSS for this exercise, but structure it as if it were in a separate file
+      - Implement a modern, cohesive design system including:
+        * A harmonious color palette (consider using CSS variables for colors)
+        * Typography: Use a combination of web-safe and Google Fonts for varied, attractive typography
+        * Responsive layout using Flexbox and/or CSS Grid
+        * Subtle animations and transitions for interactive elements
+        * Implement at least one advanced CSS technique (e.g., CSS shapes, backdrop-filter, custom properties)
+      - Use modern CSS features like:
+        * Custom properties (CSS variables)
+        * Calc() for dynamic calculations
+        * Media queries for responsiveness
+        * CSS Grid for complex layouts
+      - Incorporate current design trends such as:
+        * Neumorphism or glassmorphism effects
+        * Microinteractions
+        * Bold typography
+        * Asymmetrical layouts
+      - Ensure the design is fully responsive and looks good on mobile, tablet, and desktop
+
+   c. JavaScript functionality:
+      - Add meaningful interactivity relevant to the website type
+      - Implement at least two dynamic elements (e.g., smooth scrolling, lazy loading images, dynamic content updates)
+      - Use modern JavaScript (ES6+) features and best practices
+
+2. Ensure the webpage looks professional and cutting-edge:
+   - Apply principles of visual hierarchy and whitespace
+   - Use high-quality, relevant images (use Lorem Picsum for image URLs, but style them appropriately)
+   - Implement subtle background patterns or gradients where appropriate
+   - Add thoughtful microinteractions and hover effects
+
+3. Include realistic placeholder content that is relevant to the website type:
+   - Generate engaging, contextually appropriate text for all content areas
+   - Create compelling headings, subheadings, and calls-to-action
+   - Use plausible names, titles, and descriptions
+   - Adapt content style and tone to match the nature of the website type
+
+4. Optimize for performance and user experience:
+   - Use efficient CSS selectors
+   - Implement lazy loading for images
+   - Ensure the website is keyboard navigable
+   - Add appropriate meta tags for SEO
+
+Output: Provide the complete HTML document, including all inline CSS and JavaScript, ready to be rendered by a web browser. The output should contain only the HTML code, with no additional explanations or comments outside the code itself. Ensure the design is modern, stylish, and tailored to the given website type."#;
 
 struct AppState {
     buffers: [String; 2],
@@ -49,17 +130,17 @@ impl From<&ConverseError> for BedrockConverseError {
 
 async fn generate_webpage(client: &Client) -> Result<String, BedrockConverseError> {
     info!("Starting webpage generation");
-    let prompt = "Generate a random webpage complete with HTML, inline CSS, and inline JavaScript \
-    just as you would find it on the web. You response should be just the website HTML as it would \
-    be returned from a webserver.";
+    let category = WEBSITE_CATEGORIES.choose(&mut rand::thread_rng()).unwrap();
+    let prompt = WEBPAGE_GENERATION_PROMPT.replace("{{CATEGORY}}", category);
 
     let response = client
         .converse()
         .model_id(MODEL_ID)
+        .inference_config(InferenceConfiguration::builder().temperature(0.8).build())
         .messages(
             aws_sdk_bedrockruntime::types::Message::builder()
                 .role(ConversationRole::User)
-                .content(ContentBlock::Text(prompt.to_string()))
+                .content(ContentBlock::Text(prompt))
                 .build()
                 .map_err(|_| "failed to build message")?,
         )
