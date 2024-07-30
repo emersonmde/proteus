@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `WEBPAGE_GENERATION_PROMPT` constant in crate `proteus`."><title>WEBPAGE_GENERATION_PROMPT in proteus - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="proteus" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../static.files/storage-118b08c4c78b968e.js"></script><script defer src="sidebar-items.js"></script><script defer src="../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc constant"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../proteus/index.html">proteus</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Constant <a href="index.html">proteus</a>::<wbr><a class="constant" href="#">WEBPAGE_GENERATION_PROMPT</a><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><span class="out-of-band"><a class="src" href="../src/proteus/main.rs.html#41-95">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub(crate) const WEBPAGE_GENERATION_PROMPT: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.80.0/std/primitive.str.html">str</a> = r#&quot;Task: Generate a complete, random webpage with HTML, CSS, and JavaScript that exemplifies modern web design trends and best practices.
+
+Context: You are a creative web developer and designer tasked with creating a unique, visually stunning, fully functional webpage. The webpage should be for the following website type, showcasing contemporary design aesthetics: &quot;{{CATEGORY}}&quot;
+
+Instructions:
+1. Create a webpage for the given website type with the following components:
+   a. HTML structure:
+      - Use semantic HTML5 tags
+      - Ensure proper nesting and organization of elements
+      - Implement accessibility best practices (ARIA attributes where appropriate)
+
+   b. CSS styling:
+      - Use inline CSS for this exercise, but structure it as if it were in a separate file
+      - Implement a modern, cohesive design system including:
+        * A harmonious color palette (consider using CSS variables for colors)
+        * Typography: Use a combination of web-safe and Google Fonts for varied, attractive typography
+        * Responsive layout using Flexbox and/or CSS Grid
+        * Subtle animations and transitions for interactive elements
+        * Implement at least one advanced CSS technique (e.g., CSS shapes, backdrop-filter, custom properties)
+      - Use modern CSS features like:
+        * Custom properties (CSS variables)
+        * Calc() for dynamic calculations
+        * Media queries for responsiveness
+        * CSS Grid for complex layouts
+      - Incorporate current design trends such as:
+        * Neumorphism or glassmorphism effects
+        * Microinteractions
+        * Bold typography
+        * Asymmetrical layouts
+      - Ensure the design is fully responsive and looks good on mobile, tablet, and desktop
+
+   c. JavaScript functionality:
+      - Add meaningful interactivity relevant to the website type
+      - Implement at least two dynamic elements (e.g., smooth scrolling, lazy loading images, dynamic content updates)
+      - Use modern JavaScript (ES6+) features and best practices
+
+2. Ensure the webpage looks professional and cutting-edge:
+   - Apply principles of visual hierarchy and whitespace
+   - Use high-quality, relevant images (use Lorem Picsum for image URLs, but style them appropriately)
+   - Implement subtle background patterns or gradients where appropriate
+   - Add thoughtful microinteractions and hover effects
+
+3. Include realistic placeholder content that is relevant to the website type:
+   - Generate engaging, contextually appropriate text for all content areas
+   - Create compelling headings, subheadings, and calls-to-action
+   - Use plausible names, titles, and descriptions
+   - Adapt content style and tone to match the nature of the website type
+
+4. Optimize for performance and user experience:
+   - Use efficient CSS selectors
+   - Implement lazy loading for images
+   - Ensure the website is keyboard navigable
+   - Add appropriate meta tags for SEO
+
+Output: Provide the complete HTML document, including all inline CSS and JavaScript, ready to be rendered by a web browser. The output should contain only the HTML code, with no additional explanations or comments outside the code itself. Ensure the design is modern, stylish, and tailored to the given website type.&quot;#;</code></pre></section></div></main></body></html>

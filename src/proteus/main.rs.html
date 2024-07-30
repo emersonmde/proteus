@@ -148,13 +148,96 @@
 <a href="#148" id="148">148</a>
 <a href="#149" id="149">149</a>
 <a href="#150" id="150">150</a>
+<a href="#151" id="151">151</a>
+<a href="#152" id="152">152</a>
+<a href="#153" id="153">153</a>
+<a href="#154" id="154">154</a>
+<a href="#155" id="155">155</a>
+<a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
+<a href="#158" id="158">158</a>
+<a href="#159" id="159">159</a>
+<a href="#160" id="160">160</a>
+<a href="#161" id="161">161</a>
+<a href="#162" id="162">162</a>
+<a href="#163" id="163">163</a>
+<a href="#164" id="164">164</a>
+<a href="#165" id="165">165</a>
+<a href="#166" id="166">166</a>
+<a href="#167" id="167">167</a>
+<a href="#168" id="168">168</a>
+<a href="#169" id="169">169</a>
+<a href="#170" id="170">170</a>
+<a href="#171" id="171">171</a>
+<a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
+<a href="#193" id="193">193</a>
+<a href="#194" id="194">194</a>
+<a href="#195" id="195">195</a>
+<a href="#196" id="196">196</a>
+<a href="#197" id="197">197</a>
+<a href="#198" id="198">198</a>
+<a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
+<a href="#202" id="202">202</a>
+<a href="#203" id="203">203</a>
+<a href="#204" id="204">204</a>
+<a href="#205" id="205">205</a>
+<a href="#206" id="206">206</a>
+<a href="#207" id="207">207</a>
+<a href="#208" id="208">208</a>
+<a href="#209" id="209">209</a>
+<a href="#210" id="210">210</a>
+<a href="#211" id="211">211</a>
+<a href="#212" id="212">212</a>
+<a href="#213" id="213">213</a>
+<a href="#214" id="214">214</a>
+<a href="#215" id="215">215</a>
+<a href="#216" id="216">216</a>
+<a href="#217" id="217">217</a>
+<a href="#218" id="218">218</a>
+<a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>aws_config::BehaviorVersion;
+<span class="kw">use </span>aws_sdk_bedrockruntime::types::InferenceConfiguration;
 <span class="kw">use </span>aws_sdk_bedrockruntime::{
     operation::converse::{ConverseError, ConverseOutput},
     types::{ContentBlock, ConversationRole},
     Client,
 };
 <span class="kw">use </span>axum::{extract::State, response::Html, routing::get, serve, Router};
+<span class="kw">use </span>rand::prelude::IndexedRandom;
 <span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>tokio::net::TcpListener;
 <span class="kw">use </span>tokio::sync::{Mutex, RwLock};
@@ -162,6 +245,85 @@
 
 <span class="kw">const </span>AWS_REGION: <span class="kw-2">&amp;</span>str = <span class="string">"us-east-1"</span>;
 <span class="kw">const </span>MODEL_ID: <span class="kw-2">&amp;</span>str = <span class="string">"anthropic.claude-3-5-sonnet-20240620-v1:0"</span>;
+
+<span class="kw">const </span>WEBSITE_CATEGORIES: [<span class="kw-2">&amp;</span>str; <span class="number">20</span>] = [
+    <span class="string">"Tech Blog"</span>,
+    <span class="string">"News Website"</span>,
+    <span class="string">"Travel Website"</span>,
+    <span class="string">"E-commerce Store"</span>,
+    <span class="string">"Personal Portfolio"</span>,
+    <span class="string">"Restaurant Website"</span>,
+    <span class="string">"Fitness Blog"</span>,
+    <span class="string">"Photography Portfolio"</span>,
+    <span class="string">"Corporate Website"</span>,
+    <span class="string">"Educational Platform"</span>,
+    <span class="string">"Music Streaming Service"</span>,
+    <span class="string">"Real Estate Listings"</span>,
+    <span class="string">"Fashion Blog"</span>,
+    <span class="string">"Social Media Dashboard"</span>,
+    <span class="string">"Online Marketplace"</span>,
+    <span class="string">"Gaming Community"</span>,
+    <span class="string">"Recipe Blog"</span>,
+    <span class="string">"Nonprofit Organization"</span>,
+    <span class="string">"Event Planning Service"</span>,
+    <span class="string">"Job Board"</span>,
+];
+
+<span class="kw">const </span>WEBPAGE_GENERATION_PROMPT: <span class="kw-2">&amp;</span>str = <span class="string">r#"Task: Generate a complete, random webpage with HTML, CSS, and JavaScript that exemplifies modern web design trends and best practices.
+
+Context: You are a creative web developer and designer tasked with creating a unique, visually stunning, fully functional webpage. The webpage should be for the following website type, showcasing contemporary design aesthetics: "{{CATEGORY}}"
+
+Instructions:
+1. Create a webpage for the given website type with the following components:
+   a. HTML structure:
+      - Use semantic HTML5 tags
+      - Ensure proper nesting and organization of elements
+      - Implement accessibility best practices (ARIA attributes where appropriate)
+
+   b. CSS styling:
+      - Use inline CSS for this exercise, but structure it as if it were in a separate file
+      - Implement a modern, cohesive design system including:
+        * A harmonious color palette (consider using CSS variables for colors)
+        * Typography: Use a combination of web-safe and Google Fonts for varied, attractive typography
+        * Responsive layout using Flexbox and/or CSS Grid
+        * Subtle animations and transitions for interactive elements
+        * Implement at least one advanced CSS technique (e.g., CSS shapes, backdrop-filter, custom properties)
+      - Use modern CSS features like:
+        * Custom properties (CSS variables)
+        * Calc() for dynamic calculations
+        * Media queries for responsiveness
+        * CSS Grid for complex layouts
+      - Incorporate current design trends such as:
+        * Neumorphism or glassmorphism effects
+        * Microinteractions
+        * Bold typography
+        * Asymmetrical layouts
+      - Ensure the design is fully responsive and looks good on mobile, tablet, and desktop
+
+   c. JavaScript functionality:
+      - Add meaningful interactivity relevant to the website type
+      - Implement at least two dynamic elements (e.g., smooth scrolling, lazy loading images, dynamic content updates)
+      - Use modern JavaScript (ES6+) features and best practices
+
+2. Ensure the webpage looks professional and cutting-edge:
+   - Apply principles of visual hierarchy and whitespace
+   - Use high-quality, relevant images (use Lorem Picsum for image URLs, but style them appropriately)
+   - Implement subtle background patterns or gradients where appropriate
+   - Add thoughtful microinteractions and hover effects
+
+3. Include realistic placeholder content that is relevant to the website type:
+   - Generate engaging, contextually appropriate text for all content areas
+   - Create compelling headings, subheadings, and calls-to-action
+   - Use plausible names, titles, and descriptions
+   - Adapt content style and tone to match the nature of the website type
+
+4. Optimize for performance and user experience:
+   - Use efficient CSS selectors
+   - Implement lazy loading for images
+   - Ensure the website is keyboard navigable
+   - Add appropriate meta tags for SEO
+
+Output: Provide the complete HTML document, including all inline CSS and JavaScript, ready to be rendered by a web browser. The output should contain only the HTML code, with no additional explanations or comments outside the code itself. Ensure the design is modern, stylish, and tailored to the given website type."#</span>;
 
 <span class="kw">struct </span>AppState {
     buffers: [String; <span class="number">2</span>],
@@ -199,17 +361,17 @@
 
 <span class="kw">async fn </span>generate_webpage(client: <span class="kw-2">&amp;</span>Client) -&gt; <span class="prelude-ty">Result</span>&lt;String, BedrockConverseError&gt; {
     <span class="macro">info!</span>(<span class="string">"Starting webpage generation"</span>);
-    <span class="kw">let </span>prompt = <span class="string">"Generate a random webpage complete with HTML, inline CSS, and inline JavaScript \
-    just as you would find it on the web. You response should be just the website HTML as it would \
-    be returned from a webserver."</span>;
+    <span class="kw">let </span>category = WEBSITE_CATEGORIES.choose(<span class="kw-2">&amp;mut </span>rand::thread_rng()).unwrap();
+    <span class="kw">let </span>prompt = WEBPAGE_GENERATION_PROMPT.replace(<span class="string">"{{CATEGORY}}"</span>, category);
 
     <span class="kw">let </span>response = client
         .converse()
         .model_id(MODEL_ID)
+        .inference_config(InferenceConfiguration::builder().temperature(<span class="number">0.8</span>).build())
         .messages(
             aws_sdk_bedrockruntime::types::Message::builder()
                 .role(ConversationRole::User)
-                .content(ContentBlock::Text(prompt.to_string()))
+                .content(ContentBlock::Text(prompt))
                 .build()
                 .map_err(|<span class="kw">_</span>| <span class="string">"failed to build message"</span>)<span class="question-mark">?</span>,
         )

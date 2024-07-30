@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["AWS_REGION","MODEL_ID"],"fn":["generate_webpage","get_converse_output_text","main","serve_webpage"],"struct":["AppState","BedrockConverseError"]};
+window.SIDEBAR_ITEMS = {"constant":["AWS_REGION","MODEL_ID","WEBPAGE_GENERATION_PROMPT","WEBSITE_CATEGORIES"],"fn":["generate_webpage","get_converse_output_text","main","serve_webpage"],"struct":["AppState","BedrockConverseError"]};
