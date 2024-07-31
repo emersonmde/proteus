@@ -229,6 +229,112 @@
 <a href="#229" id="229">229</a>
 <a href="#230" id="230">230</a>
 <a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+<a href="#326" id="326">326</a>
+<a href="#327" id="327">327</a>
+<a href="#328" id="328">328</a>
+<a href="#329" id="329">329</a>
+<a href="#330" id="330">330</a>
+<a href="#331" id="331">331</a>
+<a href="#332" id="332">332</a>
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>aws_config::BehaviorVersion;
 <span class="kw">use </span>aws_sdk_bedrockruntime::types::InferenceConfiguration;
 <span class="kw">use </span>aws_sdk_bedrockruntime::{
@@ -241,89 +347,171 @@
 <span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>tokio::net::TcpListener;
 <span class="kw">use </span>tokio::sync::{Mutex, RwLock};
+<span class="kw">use </span>tokio::time::Instant;
 <span class="kw">use </span>tracing::info;
 
 <span class="kw">const </span>AWS_REGION: <span class="kw-2">&amp;</span>str = <span class="string">"us-east-1"</span>;
 <span class="kw">const </span>MODEL_ID: <span class="kw-2">&amp;</span>str = <span class="string">"anthropic.claude-3-5-sonnet-20240620-v1:0"</span>;
 
-<span class="kw">const </span>WEBSITE_CATEGORIES: [<span class="kw-2">&amp;</span>str; <span class="number">20</span>] = [
-    <span class="string">"Tech Blog"</span>,
-    <span class="string">"News Website"</span>,
-    <span class="string">"Travel Website"</span>,
-    <span class="string">"E-commerce Store"</span>,
-    <span class="string">"Personal Portfolio"</span>,
-    <span class="string">"Restaurant Website"</span>,
-    <span class="string">"Fitness Blog"</span>,
-    <span class="string">"Photography Portfolio"</span>,
-    <span class="string">"Corporate Website"</span>,
-    <span class="string">"Educational Platform"</span>,
-    <span class="string">"Music Streaming Service"</span>,
-    <span class="string">"Real Estate Listings"</span>,
-    <span class="string">"Fashion Blog"</span>,
-    <span class="string">"Social Media Dashboard"</span>,
-    <span class="string">"Online Marketplace"</span>,
-    <span class="string">"Gaming Community"</span>,
-    <span class="string">"Recipe Blog"</span>,
-    <span class="string">"Nonprofit Organization"</span>,
-    <span class="string">"Event Planning Service"</span>,
-    <span class="string">"Job Board"</span>,
+<span class="kw">const </span>WEBSITE_CATEGORIES: [<span class="kw-2">&amp;</span>str; <span class="number">100</span>] = [
+    <span class="string">"Tech News Portal"</span>,
+    <span class="string">"Weather Forecast Dashboard"</span>,
+    <span class="string">"Literary Magazine"</span>,
+    <span class="string">"Cryptocurrency Exchange"</span>,
+    <span class="string">"Indie Game Showcase"</span>,
+    <span class="string">"Minimalist Lifestyle Blog"</span>,
+    <span class="string">"Virtual Art Gallery"</span>,
+    <span class="string">"Scientific Research Database"</span>,
+    <span class="string">"Gourmet Recipe Collection"</span>,
+    <span class="string">"Cyberpunk-themed E-commerce"</span>,
+    <span class="string">"Environmental Conservation NGO"</span>,
+    <span class="string">"Interactive Children's Storybook"</span>,
+    <span class="string">"Futuristic Smart Home Control Panel"</span>,
+    <span class="string">"Retro Arcade Game Leaderboard"</span>,
+    <span class="string">"Luxury Watch Boutique"</span>,
+    <span class="string">"Space Exploration News Site"</span>,
+    <span class="string">"Mindfulness and Meditation App"</span>,
+    <span class="string">"Sustainable Fashion Marketplace"</span>,
+    <span class="string">"Graphic Novel Reader"</span>,
+    <span class="string">"Artificial Intelligence Chatbot Interface"</span>,
+    <span class="string">"Virtual Reality Travel Experience"</span>,
+    <span class="string">"Experimental Music Composition Tool"</span>,
+    <span class="string">"Citizen Journalism Platform"</span>,
+    <span class="string">"Genealogy and Family Tree Builder"</span>,
+    <span class="string">"Quantum Computing Educational Resource"</span>,
+    <span class="string">"Artisanal Coffee Roaster"</span>,
+    <span class="string">"Vintage Photograph Restoration Service"</span>,
+    <span class="string">"Urban Gardening Community"</span>,
+    <span class="string">"Blockchain Voting System"</span>,
+    <span class="string">"Handcrafted Furniture Showcase"</span>,
+    <span class="string">"Exotic Pet Care Information Center"</span>,
+    <span class="string">"Fantasy Sports League Manager"</span>,
+    <span class="string">"Collaborative Fiction Writing Platform"</span>,
+    <span class="string">"Augmented Reality Art Installation Guide"</span>,
+    <span class="string">"Sustainable Energy Solutions Marketplace"</span>,
+    <span class="string">"Historical Reenactment Society"</span>,
+    <span class="string">"Rare Book Collector's Network"</span>,
+    <span class="string">"Underwater Photography Portfolio"</span>,
+    <span class="string">"Personalized Nutrition Plan Generator"</span>,
+    <span class="string">"Autonomous Vehicle News and Reviews"</span>,
+    <span class="string">"Interactive Music Theory Tutor"</span>,
+    <span class="string">"Minimalist Productivity Tool Suite"</span>,
+    <span class="string">"Bespoke Tailoring Service"</span>,
+    <span class="string">"Drone Racing League"</span>,
+    <span class="string">"Foraging and Wild Edibles Guide"</span>,
+    <span class="string">"Competitive Esports Team Profile"</span>,
+    <span class="string">"Traditional Craft Preservation Society"</span>,
+    <span class="string">"Tiny House Design and Living Blog"</span>,
+    <span class="string">"Asteroid Mining Company"</span>,
+    <span class="string">"Bioluminescent Organism Database"</span>,
+    <span class="string">"Virtual Fashion Show Platform"</span>,
+    <span class="string">"Neurofeedback Meditation Tracker"</span>,
+    <span class="string">"Architectural Acoustics Consultancy"</span>,
+    <span class="string">"Holographic Display Art Gallery"</span>,
+    <span class="string">"Extinct Language Learning Resource"</span>,
+    <span class="string">"Eco-friendly Packaging Design Showcase"</span>,
+    <span class="string">"Competitive Rubik's Cube Solving Community"</span>,
+    <span class="string">"Biohacking and Human Augmentation Forum"</span>,
+    <span class="string">"Generative Art Creation Tool"</span>,
+    <span class="string">"Sustainable Urban Planning Simulator"</span>,
+    <span class="string">"Microgravity Experiment Database"</span>,
+    <span class="string">"Artisanal Cheese Aging Tracker"</span>,
+    <span class="string">"Cryptozoology Evidence Archive"</span>,
+    <span class="string">"Futuristic Transportation Concept Showcase"</span>,
+    <span class="string">"Interactive Periodic Table Explorer"</span>,
+    <span class="string">"Experimental Theater Production Platform"</span>,
+    <span class="string">"Bonsai Cultivation Masterclass"</span>,
+    <span class="string">"Synthetic Biology Design Tool"</span>,
+    <span class="string">"Psychedelic Art Therapy Resource"</span>,
+    <span class="string">"Ancient Civilization Mystery Solver"</span>,
+    <span class="string">"Extreme Weather Photography Gallery"</span>,
+    <span class="string">"Fermentation Process Monitoring App"</span>,
+    <span class="string">"Origami Design and Sharing Platform"</span>,
+    <span class="string">"Ethical Hacking Tutorial Series"</span>,
+    <span class="string">"Particle Physics Visualization Tool"</span>,
+    <span class="string">"Retro Computing Emulator Collection"</span>,
+    <span class="string">"Urban Exploration Safety Guide"</span>,
+    <span class="string">"Collaborative Music Remix Platform"</span>,
+    <span class="string">"Insect-based Cuisine Recipe Blog"</span>,
+    <span class="string">"Sustainable Architecture Portfolio"</span>,
+    <span class="string">"Time Capsule Creation Service"</span>,
+    <span class="string">"Geocaching Adventure Planner"</span>,
+    <span class="string">"Competitive Drone Obstacle Course"</span>,
+    <span class="string">"Minimalist Watch Face Designer"</span>,
+    <span class="string">"Fractal Art Generator"</span>,
+    <span class="string">"Sensory Deprivation Float Center Locator"</span>,
+    <span class="string">"Abandoned Places Photography Tour"</span>,
+    <span class="string">"Acoustic Levitation Experiment Guide"</span>,
+    <span class="string">"Bioluminescent Landscaping Service"</span>,
+    <span class="string">"Sustainable Tiny House Community"</span>,
+    <span class="string">"Exoplanet Discovery News Aggregator"</span>,
+    <span class="string">"Interactive Optical Illusion Gallery"</span>,
+    <span class="string">"Molecular Gastronomy Technique Database"</span>,
+    <span class="string">"Autonomous Robot Building Competition"</span>,
+    <span class="string">"Experimental Typography Showcase"</span>,
+    <span class="string">"Lucid Dreaming Journal and Guide"</span>,
+    <span class="string">"Underwater Cave Mapping Project"</span>,
+    <span class="string">"Customizable Hologram Message Creator"</span>,
+    <span class="string">"Zero-Waste Lifestyle Community"</span>,
+    <span class="string">"Experimental Musical Instrument Maker"</span>,
 ];
 
-<span class="kw">const </span>WEBPAGE_GENERATION_PROMPT: <span class="kw-2">&amp;</span>str = <span class="string">r#"Task: Generate a complete, random webpage with HTML, CSS, and JavaScript that exemplifies modern web design trends and best practices.
+<span class="kw">const </span>WEBSITE_GENERATION_PROMPT: <span class="kw-2">&amp;</span>str = <span class="string">r#"As a senior UI designer at a top tech company like Apple or Google, create a visually stunning and highly functional HTML webpage for a "{{CATEGORY}}" website. Your design should showcase cutting-edge web design principles, exceptional user experience, and innovative visual elements, all tailored specifically to the {{CATEGORY}} niche.
 
-Context: You are a creative web developer and designer tasked with creating a unique, visually stunning, fully functional webpage. The webpage should be for the following website type, showcasing contemporary design aesthetics: "{{CATEGORY}}"
+Requirements:
 
-Instructions:
-1. Create a webpage for the given website type with the following components:
-   a. HTML structure:
-      - Use semantic HTML5 tags
-      - Ensure proper nesting and organization of elements
-      - Implement accessibility best practices (ARIA attributes where appropriate)
+1. Output a complete, self-contained HTML document with inline CSS. Start with &lt;!DOCTYPE html&gt; and end with &lt;/html&gt;. Include no explanations or additional text.
 
-   b. CSS styling:
-      - Use inline CSS for this exercise, but structure it as if it were in a separate file
-      - Implement a modern, cohesive design system including:
-        * A harmonious color palette (consider using CSS variables for colors)
-        * Typography: Use a combination of web-safe and Google Fonts for varied, attractive typography
-        * Responsive layout using Flexbox and/or CSS Grid
-        * Subtle animations and transitions for interactive elements
-        * Implement at least one advanced CSS technique (e.g., CSS shapes, backdrop-filter, custom properties)
-      - Use modern CSS features like:
-        * Custom properties (CSS variables)
-        * Calc() for dynamic calculations
-        * Media queries for responsiveness
-        * CSS Grid for complex layouts
-      - Incorporate current design trends such as:
-        * Neumorphism or glassmorphism effects
-        * Microinteractions
-        * Bold typography
-        * Asymmetrical layouts
-      - Ensure the design is fully responsive and looks good on mobile, tablet, and desktop
+2. Use semantic HTML5 structure with meticulous attention to accessibility (ARIA attributes, proper heading hierarchy, meaningful alt text).
 
-   c. JavaScript functionality:
-      - Add meaningful interactivity relevant to the website type
-      - Implement at least two dynamic elements (e.g., smooth scrolling, lazy loading images, dynamic content updates)
-      - Use modern JavaScript (ES6+) features and best practices
+3. Implement a sophisticated, unique design system tailored to the {{CATEGORY}}:
+   - Curate a an expertly crafted color palette using CSS custom properties that resonates with the {{CATEGORY}} audience
+   - Pair typography to enhance readability and convey the personality of a {{CATEGORY}} website
+   - Create a responsive layout using advanced Flexbox and CSS Grid techniques, optimized for typical {{CATEGORY}} content
+   - Include purposeful micro-animations and transitions that enhance the {{CATEGORY}} user experience
+   - Incorporate at least three advanced CSS techniques (e.g., CSS shapes, backdrop-filter, clip-path, CSS masks, custom properties) in ways that complement the {{CATEGORY}} theme
 
-2. Ensure the webpage looks professional and cutting-edge:
-   - Apply principles of visual hierarchy and whitespace
-   - Use high-quality, relevant images (use Lorem Picsum for image URLs, but style them appropriately)
-   - Implement subtle background patterns or gradients where appropriate
-   - Add thoughtful microinteractions and hover effects
+4. Design an innovative and unique navbar that reflects the {{CATEGORY}}:
+   - Breaks away from conventional styles while maintaining usability and relevance to {{CATEGORY}} navigation needs
+   - Integrates seamlessly with the overall {{CATEGORY}} design
+   - Utilizes creative interaction patterns that make sense for {{CATEGORY}} users
+   - Adapts intelligently across different device sizes, considering how {{CATEGORY}} users might access the site
+   - Employs cutting-edge CSS effects that enhance the {{CATEGORY}} brand
 
-3. Include realistic placeholder content that is relevant to the website type:
-   - Generate engaging, contextually appropriate text for all content areas
-   - Create compelling headings, subheadings, and calls-to-action
-   - Use plausible names, titles, and descriptions
-   - Adapt content style and tone to match the nature of the website type
+5. Expertly apply current design trends in the context of {{CATEGORY}}:
+   - Use neumorphism, glassmorphism, or other cutting-edge effects where appropriate for the {{CATEGORY}}
+   - Implement thoughtful microinteractions to guide user behavior in the {{CATEGORY}} context
+   - Use typography as a central design element that captures the essence of {{CATEGORY}}
+   - Create asymmetrical layouts that maintain visual balance while showcasing {{CATEGORY}} content
+   - Consider both light and dark mode experiences that suit {{CATEGORY}} user preferences
+   - Incorporate advanced scrolling effects (parallax, reveal animations) that enhance the {{CATEGORY}} narrative
+   - Balance aesthetics and functionality perfectly for a {{CATEGORY}} website
 
-4. Optimize for performance and user experience:
-   - Use efficient CSS selectors
-   - Implement lazy loading for images
-   - Ensure the website is keyboard navigable
-   - Add appropriate meta tags for SEO
+6. Use Lorem Picsum for all images, styled appropriately for {{CATEGORY}}:
+   - https://picsum.photos/seed/[RANDOM_SEED]/width/height
+   Apply creative CSS treatments (e.g., masks, blend modes, filters) to elevate the design and align with {{CATEGORY}} aesthetics.
 
-Output: Provide the complete HTML document, including all inline CSS and JavaScript, ready to be rendered by a web browser. The output should contain only the HTML code, with no additional explanations or comments outside the code itself. Ensure the design is modern, stylish, and tailored to the given website type."#</span>;
+7. Craft a professional, innovative, and unique appearance that's perfect for {{CATEGORY}}:
+   - Use whitespace strategically to create visual hierarchy suited to {{CATEGORY}} content
+   - Design custom background patterns or subtle textures that add depth and relate to {{CATEGORY}}
+   - Create innovative hover and focus states that delight {{CATEGORY}} users
+   - Push the boundaries of web design while maintaining intuitive usability for the {{CATEGORY}} audience
+
+8. Include engaging, brand-appropriate content for the {{CATEGORY}}:
+   - Write persuasive and concise copy reflecting UX writing best practices and {{CATEGORY}} terminology
+   - Craft headings and CTAs demonstrating conversion optimization understanding in the {{CATEGORY}} context
+   - Use realistic placeholder content that showcases the design's potential and feels authentic to {{CATEGORY}}
+
+9. Ensure efficient code practices to keep the HTML file size reasonable without compromising design quality or {{CATEGORY}}-specific content.
+
+10. Incorporate innovative structural elements that serve the {{CATEGORY}} purpose:
+    - Design an engaging hero section that immediately communicates the {{CATEGORY}} value proposition
+    - Organize content to tell a compelling story about the {{CATEGORY}} brand or product
+    - Thoughtfully integrate the navbar with other page elements for a cohesive {{CATEGORY}} experience
+
+Remember, you are a top-tier UI designer creating a {{CATEGORY}} website. Your webpage should not only be visually stunning but also demonstrate a deep understanding of user-centered design principles, current industry best practices, and innovative approaches to web design, all perfectly tailored to {{CATEGORY}}. Craft every element with intention, ensuring the final product is worthy of a leading tech company's portfolio and perfectly suited to the {{CATEGORY}} niche.
+
+Generate only the HTML and inline CSS for this {{CATEGORY}} webpage, starting with &lt;!DOCTYPE html&gt; and ending with &lt;/html&gt;. Do not include any explanations or additional text."#</span>;
 
 <span class="kw">struct </span>AppState {
     buffers: [String; <span class="number">2</span>],
@@ -360,14 +548,34 @@ Output: Provide the complete HTML document, including all inline CSS and JavaScr
 }
 
 <span class="kw">async fn </span>generate_webpage(client: <span class="kw-2">&amp;</span>Client) -&gt; <span class="prelude-ty">Result</span>&lt;String, BedrockConverseError&gt; {
-    <span class="macro">info!</span>(<span class="string">"Starting webpage generation"</span>);
     <span class="kw">let </span>category = WEBSITE_CATEGORIES.choose(<span class="kw-2">&amp;mut </span>rand::thread_rng()).unwrap();
-    <span class="kw">let </span>prompt = WEBPAGE_GENERATION_PROMPT.replace(<span class="string">"{{CATEGORY}}"</span>, category);
+    <span class="macro">info!</span>(<span class="string">"Starting webpage generation for category: {category}"</span>);
 
+    <span class="kw">let </span>webpage_generation_start = Instant::now();
+    <span class="kw">let </span>final_prompt = WEBSITE_GENERATION_PROMPT.replace(<span class="string">"{{CATEGORY}}"</span>, category);
+    <span class="kw">let </span>webpage_content = invoke_bedrock(client, final_prompt.to_string()).<span class="kw">await</span><span class="question-mark">?</span>;
+
+    <span class="comment">// Remove any potential non-HTML content
+    </span><span class="kw">let </span>html_start = webpage_content.find(<span class="string">"&lt;!DOCTYPE html&gt;"</span>).unwrap_or(<span class="number">0</span>);
+    <span class="kw">let </span>html_end = webpage_content
+        .rfind(<span class="string">"&lt;/html&gt;"</span>)
+        .map(|i| i + <span class="number">7</span>)
+        .unwrap_or(webpage_content.len());
+    <span class="kw">let </span>cleaned_content = <span class="kw-2">&amp;</span>webpage_content[html_start..html_end];
+    <span class="kw">let </span>webpage_generation_duration = webpage_generation_start.elapsed();
+
+    <span class="macro">info!</span>(
+        category = %category,
+        webpage_generation_time = <span class="question-mark">?</span>webpage_generation_duration,
+        <span class="string">"Webpage generation complete"
+    </span>);
+    <span class="prelude-val">Ok</span>(cleaned_content.to_string())
+}
+<span class="kw">async fn </span>invoke_bedrock(client: <span class="kw-2">&amp;</span>Client, prompt: String) -&gt; <span class="prelude-ty">Result</span>&lt;String, BedrockConverseError&gt; {
     <span class="kw">let </span>response = client
         .converse()
         .model_id(MODEL_ID)
-        .inference_config(InferenceConfiguration::builder().temperature(<span class="number">0.8</span>).build())
+        .inference_config(InferenceConfiguration::builder().temperature(<span class="number">1.0</span>).build())
         .messages(
             aws_sdk_bedrockruntime::types::Message::builder()
                 .role(ConversationRole::User)
@@ -378,7 +586,6 @@ Output: Provide the complete HTML document, including all inline CSS and JavaScr
         .send()
         .<span class="kw">await</span>;
 
-    <span class="macro">info!</span>(<span class="string">"Finished webpage generation"</span>);
     <span class="kw">match </span>response {
         <span class="prelude-val">Ok</span>(output) =&gt; get_converse_output_text(output),
         <span class="prelude-val">Err</span>(e) =&gt; <span class="prelude-val">Err</span>(e
@@ -404,6 +611,7 @@ Output: Provide the complete HTML document, including all inline CSS and JavaScr
 }
 
 <span class="kw">async fn </span>serve_webpage(State(state): State&lt;Arc&lt;RwLock&lt;AppState&gt;&gt;&gt;) -&gt; Html&lt;String&gt; {
+    <span class="kw">let </span>start_time = Instant::now();
     <span class="macro">info!</span>(<span class="string">"Handling new request"</span>);
     <span class="kw">let </span>current_buffer;
     {
@@ -428,7 +636,11 @@ Output: Provide the complete HTML document, including all inline CSS and JavaScr
         });
     }
 
-    <span class="macro">info!</span>(<span class="string">"Finished handling request"</span>);
+    <span class="kw">let </span>total_duration = start_time.elapsed();
+    <span class="macro">info!</span>(
+        request_time = <span class="question-mark">?</span>total_duration,
+        <span class="string">"Finished handling request"
+    </span>);
     Html(state.read().<span class="kw">await</span>.buffers[current_buffer].clone())
 }
 
@@ -454,7 +666,7 @@ Output: Provide the complete HTML document, including all inline CSS and JavaScr
         .with_state(app_state);
 
     <span class="kw">let </span>listener = TcpListener::bind(<span class="string">"0.0.0.0:3000"</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-    <span class="macro">println!</span>(<span class="string">"Server running on http://localhost:3000"</span>);
+    <span class="macro">info!</span>(<span class="string">"Server running on http://localhost:3000"</span>);
 
     serve(listener, app).<span class="kw">await</span><span class="question-mark">?</span>;
 
