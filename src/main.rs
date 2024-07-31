@@ -10,89 +10,171 @@ use rand::prelude::IndexedRandom;
 use std::sync::Arc;
 use tokio::net::TcpListener;
 use tokio::sync::{Mutex, RwLock};
+use tokio::time::Instant;
 use tracing::info;
 
 const AWS_REGION: &str = "us-east-1";
 const MODEL_ID: &str = "anthropic.claude-3-5-sonnet-20240620-v1:0";
 
-const WEBSITE_CATEGORIES: [&str; 20] = [
-    "Tech Blog",
-    "News Website",
-    "Travel Website",
-    "E-commerce Store",
-    "Personal Portfolio",
-    "Restaurant Website",
-    "Fitness Blog",
-    "Photography Portfolio",
-    "Corporate Website",
-    "Educational Platform",
-    "Music Streaming Service",
-    "Real Estate Listings",
-    "Fashion Blog",
-    "Social Media Dashboard",
-    "Online Marketplace",
-    "Gaming Community",
-    "Recipe Blog",
-    "Nonprofit Organization",
-    "Event Planning Service",
-    "Job Board",
+const WEBSITE_CATEGORIES: [&str; 100] = [
+    "Tech News Portal",
+    "Weather Forecast Dashboard",
+    "Literary Magazine",
+    "Cryptocurrency Exchange",
+    "Indie Game Showcase",
+    "Minimalist Lifestyle Blog",
+    "Virtual Art Gallery",
+    "Scientific Research Database",
+    "Gourmet Recipe Collection",
+    "Cyberpunk-themed E-commerce",
+    "Environmental Conservation NGO",
+    "Interactive Children's Storybook",
+    "Futuristic Smart Home Control Panel",
+    "Retro Arcade Game Leaderboard",
+    "Luxury Watch Boutique",
+    "Space Exploration News Site",
+    "Mindfulness and Meditation App",
+    "Sustainable Fashion Marketplace",
+    "Graphic Novel Reader",
+    "Artificial Intelligence Chatbot Interface",
+    "Virtual Reality Travel Experience",
+    "Experimental Music Composition Tool",
+    "Citizen Journalism Platform",
+    "Genealogy and Family Tree Builder",
+    "Quantum Computing Educational Resource",
+    "Artisanal Coffee Roaster",
+    "Vintage Photograph Restoration Service",
+    "Urban Gardening Community",
+    "Blockchain Voting System",
+    "Handcrafted Furniture Showcase",
+    "Exotic Pet Care Information Center",
+    "Fantasy Sports League Manager",
+    "Collaborative Fiction Writing Platform",
+    "Augmented Reality Art Installation Guide",
+    "Sustainable Energy Solutions Marketplace",
+    "Historical Reenactment Society",
+    "Rare Book Collector's Network",
+    "Underwater Photography Portfolio",
+    "Personalized Nutrition Plan Generator",
+    "Autonomous Vehicle News and Reviews",
+    "Interactive Music Theory Tutor",
+    "Minimalist Productivity Tool Suite",
+    "Bespoke Tailoring Service",
+    "Drone Racing League",
+    "Foraging and Wild Edibles Guide",
+    "Competitive Esports Team Profile",
+    "Traditional Craft Preservation Society",
+    "Tiny House Design and Living Blog",
+    "Asteroid Mining Company",
+    "Bioluminescent Organism Database",
+    "Virtual Fashion Show Platform",
+    "Neurofeedback Meditation Tracker",
+    "Architectural Acoustics Consultancy",
+    "Holographic Display Art Gallery",
+    "Extinct Language Learning Resource",
+    "Eco-friendly Packaging Design Showcase",
+    "Competitive Rubik's Cube Solving Community",
+    "Biohacking and Human Augmentation Forum",
+    "Generative Art Creation Tool",
+    "Sustainable Urban Planning Simulator",
+    "Microgravity Experiment Database",
+    "Artisanal Cheese Aging Tracker",
+    "Cryptozoology Evidence Archive",
+    "Futuristic Transportation Concept Showcase",
+    "Interactive Periodic Table Explorer",
+    "Experimental Theater Production Platform",
+    "Bonsai Cultivation Masterclass",
+    "Synthetic Biology Design Tool",
+    "Psychedelic Art Therapy Resource",
+    "Ancient Civilization Mystery Solver",
+    "Extreme Weather Photography Gallery",
+    "Fermentation Process Monitoring App",
+    "Origami Design and Sharing Platform",
+    "Ethical Hacking Tutorial Series",
+    "Particle Physics Visualization Tool",
+    "Retro Computing Emulator Collection",
+    "Urban Exploration Safety Guide",
+    "Collaborative Music Remix Platform",
+    "Insect-based Cuisine Recipe Blog",
+    "Sustainable Architecture Portfolio",
+    "Time Capsule Creation Service",
+    "Geocaching Adventure Planner",
+    "Competitive Drone Obstacle Course",
+    "Minimalist Watch Face Designer",
+    "Fractal Art Generator",
+    "Sensory Deprivation Float Center Locator",
+    "Abandoned Places Photography Tour",
+    "Acoustic Levitation Experiment Guide",
+    "Bioluminescent Landscaping Service",
+    "Sustainable Tiny House Community",
+    "Exoplanet Discovery News Aggregator",
+    "Interactive Optical Illusion Gallery",
+    "Molecular Gastronomy Technique Database",
+    "Autonomous Robot Building Competition",
+    "Experimental Typography Showcase",
+    "Lucid Dreaming Journal and Guide",
+    "Underwater Cave Mapping Project",
+    "Customizable Hologram Message Creator",
+    "Zero-Waste Lifestyle Community",
+    "Experimental Musical Instrument Maker",
 ];
 
-const WEBPAGE_GENERATION_PROMPT: &str = r#"Task: Generate a complete, random webpage with HTML, CSS, and JavaScript that exemplifies modern web design trends and best practices.
+const WEBSITE_GENERATION_PROMPT: &str = r#"As a senior UI designer at a top tech company like Apple or Google, create a visually stunning and highly functional HTML webpage for a "{{CATEGORY}}" website. Your design should showcase cutting-edge web design principles, exceptional user experience, and innovative visual elements, all tailored specifically to the {{CATEGORY}} niche.
 
-Context: You are a creative web developer and designer tasked with creating a unique, visually stunning, fully functional webpage. The webpage should be for the following website type, showcasing contemporary design aesthetics: "{{CATEGORY}}"
+Requirements:
 
-Instructions:
-1. Create a webpage for the given website type with the following components:
-   a. HTML structure:
-      - Use semantic HTML5 tags
-      - Ensure proper nesting and organization of elements
-      - Implement accessibility best practices (ARIA attributes where appropriate)
+1. Output a complete, self-contained HTML document with inline CSS. Start with <!DOCTYPE html> and end with </html>. Include no explanations or additional text.
 
-   b. CSS styling:
-      - Use inline CSS for this exercise, but structure it as if it were in a separate file
-      - Implement a modern, cohesive design system including:
-        * A harmonious color palette (consider using CSS variables for colors)
-        * Typography: Use a combination of web-safe and Google Fonts for varied, attractive typography
-        * Responsive layout using Flexbox and/or CSS Grid
-        * Subtle animations and transitions for interactive elements
-        * Implement at least one advanced CSS technique (e.g., CSS shapes, backdrop-filter, custom properties)
-      - Use modern CSS features like:
-        * Custom properties (CSS variables)
-        * Calc() for dynamic calculations
-        * Media queries for responsiveness
-        * CSS Grid for complex layouts
-      - Incorporate current design trends such as:
-        * Neumorphism or glassmorphism effects
-        * Microinteractions
-        * Bold typography
-        * Asymmetrical layouts
-      - Ensure the design is fully responsive and looks good on mobile, tablet, and desktop
+2. Use semantic HTML5 structure with meticulous attention to accessibility (ARIA attributes, proper heading hierarchy, meaningful alt text).
 
-   c. JavaScript functionality:
-      - Add meaningful interactivity relevant to the website type
-      - Implement at least two dynamic elements (e.g., smooth scrolling, lazy loading images, dynamic content updates)
-      - Use modern JavaScript (ES6+) features and best practices
+3. Implement a sophisticated, unique design system tailored to the {{CATEGORY}}:
+   - Curate a an expertly crafted color palette using CSS custom properties that resonates with the {{CATEGORY}} audience
+   - Pair typography to enhance readability and convey the personality of a {{CATEGORY}} website
+   - Create a responsive layout using advanced Flexbox and CSS Grid techniques, optimized for typical {{CATEGORY}} content
+   - Include purposeful micro-animations and transitions that enhance the {{CATEGORY}} user experience
+   - Incorporate at least three advanced CSS techniques (e.g., CSS shapes, backdrop-filter, clip-path, CSS masks, custom properties) in ways that complement the {{CATEGORY}} theme
 
-2. Ensure the webpage looks professional and cutting-edge:
-   - Apply principles of visual hierarchy and whitespace
-   - Use high-quality, relevant images (use Lorem Picsum for image URLs, but style them appropriately)
-   - Implement subtle background patterns or gradients where appropriate
-   - Add thoughtful microinteractions and hover effects
+4. Design an innovative and unique navbar that reflects the {{CATEGORY}}:
+   - Breaks away from conventional styles while maintaining usability and relevance to {{CATEGORY}} navigation needs
+   - Integrates seamlessly with the overall {{CATEGORY}} design
+   - Utilizes creative interaction patterns that make sense for {{CATEGORY}} users
+   - Adapts intelligently across different device sizes, considering how {{CATEGORY}} users might access the site
+   - Employs cutting-edge CSS effects that enhance the {{CATEGORY}} brand
 
-3. Include realistic placeholder content that is relevant to the website type:
-   - Generate engaging, contextually appropriate text for all content areas
-   - Create compelling headings, subheadings, and calls-to-action
-   - Use plausible names, titles, and descriptions
-   - Adapt content style and tone to match the nature of the website type
+5. Expertly apply current design trends in the context of {{CATEGORY}}:
+   - Use neumorphism, glassmorphism, or other cutting-edge effects where appropriate for the {{CATEGORY}}
+   - Implement thoughtful microinteractions to guide user behavior in the {{CATEGORY}} context
+   - Use typography as a central design element that captures the essence of {{CATEGORY}}
+   - Create asymmetrical layouts that maintain visual balance while showcasing {{CATEGORY}} content
+   - Consider both light and dark mode experiences that suit {{CATEGORY}} user preferences
+   - Incorporate advanced scrolling effects (parallax, reveal animations) that enhance the {{CATEGORY}} narrative
+   - Balance aesthetics and functionality perfectly for a {{CATEGORY}} website
 
-4. Optimize for performance and user experience:
-   - Use efficient CSS selectors
-   - Implement lazy loading for images
-   - Ensure the website is keyboard navigable
-   - Add appropriate meta tags for SEO
+6. Use Lorem Picsum for all images, styled appropriately for {{CATEGORY}}:
+   - https://picsum.photos/seed/[RANDOM_SEED]/width/height
+   Apply creative CSS treatments (e.g., masks, blend modes, filters) to elevate the design and align with {{CATEGORY}} aesthetics.
 
-Output: Provide the complete HTML document, including all inline CSS and JavaScript, ready to be rendered by a web browser. The output should contain only the HTML code, with no additional explanations or comments outside the code itself. Ensure the design is modern, stylish, and tailored to the given website type."#;
+7. Craft a professional, innovative, and unique appearance that's perfect for {{CATEGORY}}:
+   - Use whitespace strategically to create visual hierarchy suited to {{CATEGORY}} content
+   - Design custom background patterns or subtle textures that add depth and relate to {{CATEGORY}}
+   - Create innovative hover and focus states that delight {{CATEGORY}} users
+   - Push the boundaries of web design while maintaining intuitive usability for the {{CATEGORY}} audience
+
+8. Include engaging, brand-appropriate content for the {{CATEGORY}}:
+   - Write persuasive and concise copy reflecting UX writing best practices and {{CATEGORY}} terminology
+   - Craft headings and CTAs demonstrating conversion optimization understanding in the {{CATEGORY}} context
+   - Use realistic placeholder content that showcases the design's potential and feels authentic to {{CATEGORY}}
+
+9. Ensure efficient code practices to keep the HTML file size reasonable without compromising design quality or {{CATEGORY}}-specific content.
+
+10. Incorporate innovative structural elements that serve the {{CATEGORY}} purpose:
+    - Design an engaging hero section that immediately communicates the {{CATEGORY}} value proposition
+    - Organize content to tell a compelling story about the {{CATEGORY}} brand or product
+    - Thoughtfully integrate the navbar with other page elements for a cohesive {{CATEGORY}} experience
+
+Remember, you are a top-tier UI designer creating a {{CATEGORY}} website. Your webpage should not only be visually stunning but also demonstrate a deep understanding of user-centered design principles, current industry best practices, and innovative approaches to web design, all perfectly tailored to {{CATEGORY}}. Craft every element with intention, ensuring the final product is worthy of a leading tech company's portfolio and perfectly suited to the {{CATEGORY}} niche.
+
+Generate only the HTML and inline CSS for this {{CATEGORY}} webpage, starting with <!DOCTYPE html> and ending with </html>. Do not include any explanations or additional text."#;
 
 struct AppState {
     buffers: [String; 2],
@@ -129,14 +211,34 @@ impl From<&ConverseError> for BedrockConverseError {
 }
 
 async fn generate_webpage(client: &Client) -> Result<String, BedrockConverseError> {
-    info!("Starting webpage generation");
     let category = WEBSITE_CATEGORIES.choose(&mut rand::thread_rng()).unwrap();
-    let prompt = WEBPAGE_GENERATION_PROMPT.replace("{{CATEGORY}}", category);
+    info!("Starting webpage generation for category: {category}");
 
+    let webpage_generation_start = Instant::now();
+    let final_prompt = WEBSITE_GENERATION_PROMPT.replace("{{CATEGORY}}", category);
+    let webpage_content = invoke_bedrock(client, final_prompt.to_string()).await?;
+
+    // Remove any potential non-HTML content
+    let html_start = webpage_content.find("<!DOCTYPE html>").unwrap_or(0);
+    let html_end = webpage_content
+        .rfind("</html>")
+        .map(|i| i + 7)
+        .unwrap_or(webpage_content.len());
+    let cleaned_content = &webpage_content[html_start..html_end];
+    let webpage_generation_duration = webpage_generation_start.elapsed();
+
+    info!(
+        category = %category,
+        webpage_generation_time = ?webpage_generation_duration,
+        "Webpage generation complete"
+    );
+    Ok(cleaned_content.to_string())
+}
+async fn invoke_bedrock(client: &Client, prompt: String) -> Result<String, BedrockConverseError> {
     let response = client
         .converse()
         .model_id(MODEL_ID)
-        .inference_config(InferenceConfiguration::builder().temperature(0.8).build())
+        .inference_config(InferenceConfiguration::builder().temperature(1.0).build())
         .messages(
             aws_sdk_bedrockruntime::types::Message::builder()
                 .role(ConversationRole::User)
@@ -147,7 +249,6 @@ async fn generate_webpage(client: &Client) -> Result<String, BedrockConverseErro
         .send()
         .await;
 
-    info!("Finished webpage generation");
     match response {
         Ok(output) => get_converse_output_text(output),
         Err(e) => Err(e
@@ -173,6 +274,7 @@ fn get_converse_output_text(output: ConverseOutput) -> Result<String, BedrockCon
 }
 
 async fn serve_webpage(State(state): State<Arc<RwLock<AppState>>>) -> Html<String> {
+    let start_time = Instant::now();
     info!("Handling new request");
     let current_buffer;
     {
@@ -197,7 +299,11 @@ async fn serve_webpage(State(state): State<Arc<RwLock<AppState>>>) -> Html<Strin
         });
     }
 
-    info!("Finished handling request");
+    let total_duration = start_time.elapsed();
+    info!(
+        request_time = ?total_duration,
+        "Finished handling request"
+    );
     Html(state.read().await.buffers[current_buffer].clone())
 }
 
@@ -223,7 +329,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .with_state(app_state);
 
     let listener = TcpListener::bind("0.0.0.0:3000").await?;
-    println!("Server running on http://localhost:3000");
+    info!("Server running on http://localhost:3000");
 
     serve(listener, app).await?;
 
