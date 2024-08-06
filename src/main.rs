@@ -1,4 +1,5 @@
 use aws_config::BehaviorVersion;
+use aws_sdk_bedrockruntime::config::Credentials;
 use aws_sdk_bedrockruntime::types::InferenceConfiguration;
 use aws_sdk_bedrockruntime::{
     operation::converse::{ConverseError, ConverseOutput},
@@ -7,6 +8,7 @@ use aws_sdk_bedrockruntime::{
 };
 use axum::{extract::State, response::Html, routing::get, serve, Router};
 use rand::prelude::IndexedRandom;
+use std::env;
 use std::sync::Arc;
 use tokio::net::TcpListener;
 use tokio::sync::{Mutex, RwLock};
@@ -310,10 +312,22 @@ async fn serve_webpage(State(state): State<Arc<RwLock<AppState>>>) -> Html<Strin
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
+    let aws_access_key_id = env::var("AWS_ACCESS_KEY_ID").expect("AWS_ACCESS_KEY_ID must be set");
+    let aws_secret_access_key =
+        env::var("AWS_SECRET_ACCESS_KEY").expect("AWS_SECRET_ACCESS_KEY must be set");
+
     let sdk_config = aws_config::defaults(BehaviorVersion::latest())
         .region(AWS_REGION)
+        .credentials_provider(Credentials::new(
+            aws_access_key_id,
+            aws_secret_access_key,
+            None,
+            None,
+            "env",
+        ))
         .load()
         .await;
+
     let client = Client::new(&sdk_config);
 
     let initial_content = generate_webpage(&client).await?;
